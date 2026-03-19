@@ -410,24 +410,20 @@ document.getElementById('btn-confirm').addEventListener('click', function() {
   btn.disabled = true;
 
   var deal = pendingDeal;
+  var url = GS_URL
+    + '?token='       + encodeURIComponent(TOKEN)
+    + '&action=submit'
+    + '&agent='       + encodeURIComponent(deal.agent)
+    + '&giveCur='     + encodeURIComponent(deal.giveCur)
+    + '&giveAmount='  + encodeURIComponent(deal.giveAmount)
+    + '&getCur='      + encodeURIComponent(deal.getCur)
+    + '&getAmount='   + encodeURIComponent(deal.getAmount)
+    + '&rate='        + encodeURIComponent(deal.rate)
+    + '&note='        + encodeURIComponent(deal.note)
+    + '&date='        + encodeURIComponent(deal.date)
+    + '&time='        + encodeURIComponent(deal.time);
 
-  fetch(GS_URL, {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      token:      TOKEN,
-      action:     'submit',
-      agent:      deal.agent,
-      giveCur:    deal.giveCur,
-      giveAmount: deal.giveAmount,
-      getCur:     deal.getCur,
-      getAmount:  deal.getAmount,
-      rate:       deal.rate,
-      note:       deal.note,
-      date:       deal.date,
-      time:       deal.time
-    })
-  })
+  fetch(url)
     .then(function(r){ return r.json(); })
     .then(function(data) {
       if (!data.ok) throw new Error(data.error || 'Ошибка сервера');
