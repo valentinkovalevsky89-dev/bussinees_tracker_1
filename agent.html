@@ -224,18 +224,15 @@ body{background:var(--bg);color:var(--text);font-family:'JetBrains Mono',monospa
 // ================================================================
 var params  = new URLSearchParams(window.location.search);
 var AGENT   = params.get('agent') || '';
-var TOKEN   = params.get('token') || '';
-var GS_URL  = params.get('gs')    || localStorage.getItem('gs_url') || '';
+var GS_URL  = params.get('gs') || localStorage.getItem('gs_url') || '';
 
 var CURS = ['usdt','eur','huf','usd','czk'];
 var SYM  = {eur:'€', huf:'Ft', usdt:'USDT', usd:'$', czk:'Kč'};
 var CLR  = {eur:'var(--eur)',huf:'var(--huf)',usdt:'var(--usdt)',usd:'var(--usd)',czk:'var(--czk)'};
 
-// Save GS_URL for convenience
 if (GS_URL) localStorage.setItem('gs_url', GS_URL);
 
-// ── Init ────────────────────────────────────────────────────────
-if (!AGENT || !TOKEN || !GS_URL) {
+if (!AGENT || !GS_URL) {
   document.getElementById('no-config-screen').classList.remove('hidden');
   document.getElementById('main-screen').style.display = 'none';
 } else {
@@ -411,8 +408,7 @@ document.getElementById('btn-confirm').addEventListener('click', function() {
 
   var deal = pendingDeal;
   var url = GS_URL
-    + '?token='       + encodeURIComponent(TOKEN)
-    + '&action=submit'
+    + '?action=submit'
     + '&agent='       + encodeURIComponent(deal.agent)
     + '&giveCur='     + encodeURIComponent(deal.giveCur)
     + '&giveAmount='  + encodeURIComponent(deal.giveAmount)
